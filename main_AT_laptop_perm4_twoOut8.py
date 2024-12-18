@@ -615,24 +615,29 @@ def build_model(dataset_name, w_p, archive_name, classifier_name, root_dir):    
     y_tru = y_test
     ##################it is suposed that downsample=1
     
-    #################calcult precision bade on the last binary output:
+    #################calcult precision based on the last binary output:
     print ('calculating precision:')
     accuracy, precision_s, recall_s, f1_s = calculate_accuracy_precision(y_actual, y_tru, y_resampled)          
     
     ############ calculate based on the max probability achived:
     
     accuracy_onMax = calculate_accuracyMax3(y_actual, y_tru, y_resampled, yo_test)# Max prob/last out
-    accuracy_onMaxVot = calculate_accuracyMaxVot3(y_actual, y_tru, y_resampled, yo_test)# Max prob/last out                     
+    #accuracy_onMaxVot = calculate_accuracyMaxVot3(y_actual, y_tru, y_resampled, yo_test)# Max prob/last out                     
     
     ####calculate testing accuracy on out1: (multi class)
+    '''
     y_actual1 = yo_test[0].argmax(axis=1)
     y_true_o1= y_test_t[0]
     acc1 = accuracy_score(y_actual1, y_true_o1)
-    print('\nTesting accuracy of Out1: ')
-    print (acc1)
+    '''
+    #print('\nTesting accuracy of Out1: ')
+    #print (acc1)
     #######save the output as scv file:
-    data= {'acc1':[acc1], 'acc_last_vot':[accuracy],'pre_last_vot':[ precision_s],'recall_last_vot':[ recall_s], 'f1_last_vot':[ f1_s], 'acc_last_Max':[accuracy_onMax], 'acc_last_MaxVot':[accuracy_onMaxVot], 'Duration':[Elaps_time]}
+    #data= {'acc1':[acc1], 'acc_last_vot':[accuracy],'pre_last_vot':[ precision_s],'recall_last_vot':[ recall_s], 'f1_last_vot':[ f1_s], 'acc_last_Max':[accuracy_onMax], 'acc_last_MaxVot':[accuracy_onMaxVot], 'Duration':[Elaps_time]}
+    data= {'acc_last_vot':[accuracy],'pre_last_vot':[ precision_s],'recall_last_vot':[ recall_s], 'f1_last_vot':[ f1_s], 'acc_last_Max':[accuracy_onMax], 'Duration':[Elaps_time]}
+
     df = pd.DataFrame(data=data)
     df.to_csv(output_directory+'Ab_best_model.csv', index=False)
     ######################
-    return acc1, accuracy,precision_s, recall_s, f1_s, accuracy_onMax, accuracy_onMaxVot, Elaps_time#o1, oLast, oLastMax, oLastMaxVot
+    #return acc1, accuracy,precision_s, recall_s, f1_s, accuracy_onMax, accuracy_onMaxVot, Elaps_time#o1, oLast, oLastMax, oLastMaxVot
+    return accuracy,precision_s, recall_s, f1_s, accuracy_onMax, Elaps_time#o1, oLast, oLastMax, oLastMaxVot

@@ -719,8 +719,8 @@ if 1==1:
         y_actual1 = yo_test[0].argmax(axis=1)
         y_true_o1= y_test_t[0]
         acc1 = accuracy_score(y_actual1, y_true_o1)
-        print('\nTesting accuracy of Out1: ')
-        print (acc1)
+        #print('\nTesting accuracy of Out1: ')
+        #print (acc1)
 
         '''
         ##########accuracy on train data:################################################################

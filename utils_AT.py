@@ -720,8 +720,8 @@ def calculate_accuracyMaxVot(y_actual, y_tru, y_train, yo_test):#calculate the a
             #    if actual_lable == y_tru[i]:
             #          count = count+1
             accuracy_onMax_v = count/len(y_tru)#*100
-            print('The accuracy of the last output based on the maximum probability and voting is:')
-            print( accuracy_onMax_v) 
+            #print('The accuracy of the last output based on the maximum probability and voting is:')
+            #print( accuracy_onMax_v) 
             return accuracy_onMax_v 
     
 def calculate_accuracyMax3(y_actual, y_tru, y_train, yo_test):#calculate the accuray of the last out(2 classes out put), MAx prob
