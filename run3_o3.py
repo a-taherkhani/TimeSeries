@@ -5,10 +5,13 @@ Created on Tue Dec  4 17:06:13 2018
 @author: A.T
 """
 
-from main_AT_laptop_perm4_twoOut8 import build_model
-
+#from main_AT_laptop_perm4_twoOut8 import build_model
+from main_o3 import build_model
+import os
 #se the path to your data set
-root_dir = 'C:/Users/ataher00/OneDrive - De Montfort University/report2/python/time series'
+# Get the absolute path of the current script
+script_path = os.path.abspath(__file__)
+root_dir = os.path.dirname(script_path)# Get the directory name of the script
 
 classifier_name='resnet_AT5_base_twoIn6_10'#   # one block before intermediate target
 
@@ -17,13 +20,7 @@ archive_name = 'UCR_TS_Archive_2015'#'mts_archive'#'UCR_TS_Archive_2015'
 #dataset_names = [ 'ArrowHead', 'Beef', 'Car', 'ECG200', 'Ham', 'Herring', 'ItalyPowerDemand', 'Lighting2', 'Lighting7', 'MoteStrain', 'ToeSegmentation1']
 #dataset_names = [ 'ArrowHead', 'Beef', 'Car', 'ECG200', 'Ham']# 'Herring', 'ItalyPowerDemand', 'Lighting2', 'Lighting7', 'MoteStrain', 'ToeSegmentation1']
 
-dataset_names = ['ArrowHead']
-###########multui variant:
-#archive_name = 'mts_archive'#'UCR_TS_Archive_2015'
-#dataset_names = [ 'cornell']
-##################Machine helth monitoring:
-#archive_name = 'machine_helth_data'#'mts_archive'#'UCR_TS_Archive_2015'
-#dataset_names = ['dat_seq']
+dataset_names = ['RandTS']
 
 acc={}#out1
 
@@ -60,8 +57,10 @@ for dataset_name in dataset_names:
     #acc_lastMoxVot[dataset_name] = accuracy_onMaxVot
     
     Elaps_times [dataset_name] = Elaps_time
-    print('acc_last, acc_lastMax')
-    print (acc_last, acc_lastMax)
+    print('acc_lastMax: ')
+    print ( acc_lastMax)
+    print('acc_last: ')
+    print (acc_last)
     print('precision, recall, F1:')
     print(precision_last, recall_last, f1_last)
     

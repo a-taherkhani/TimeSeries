@@ -5,9 +5,14 @@ Created on Tue Dec  4 17:06:13 2018
 @author: ERD204
 """
 
-from main_AT_laptop_perm4_twoOut10 import build_model
+#from main_AT_laptop_perm4_twoOut10 import build_model
+from main_o1 import build_model
 
-root_dir = 'C:/Users/ataher00/OneDrive - De Montfort University/report2/python/time series'
+import os
+#se the path to your data set
+# Get the absolute path of the current script
+script_path = os.path.abspath(__file__)
+root_dir = os.path.dirname(script_path)# Get the directory name of the script
 
  
 classifier_name='resnet_AT5_base_twoIn6_11'#   
@@ -15,7 +20,7 @@ classifier_name='resnet_AT5_base_twoIn6_11'#
 ################uni variant:
 archive_name = 'UCR_TS_Archive_2015'#'mts_archive'#'UCR_TS_Archive_2015'
 
-dataset_names = ['ArrowHead']
+dataset_names = ['RandTS']
 ###########multui variant:
 acc={}#out1
 acc_last={}

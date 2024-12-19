@@ -33,25 +33,12 @@ def read_dataset_cornell(root_dir,archive_name,dataset_name):
         labelTV = loadmat(file_name +'labelTV.mat')
         labelTV = labelTV['labelTV']
         labelTV = np.squeeze(labelTV)
-        #labelTV = [labelTV]
-        #labelTV=np.squeeze(labelTV)
         num_classes = labelTV.max()
         labelTV = labelTV-1
         x_train, x_test, y_train, y_test = train_test_split(data, labelTV, test_size=0.3, random_state=0)
-#        X_train = np.expand_dims(X_train, 3)
-#        X_test =np.expand_dims(X_test, 3)
-#        # Convert class vectors to binary class matrices.
-#        y_train = keras.utils.to_categorical(y_train, num_classes)
-#        y_test = keras.utils.to_categorical(y_test, num_classes)
         datasets_dict[dataset_name] = (x_train.copy(),y_train.copy(),x_test.copy(),
             y_test.copy())
 
-#    else:
-#        file_name = root_dir+'/archives/'+archive_name+'/'+dataset_name+'/'+dataset_name
-#        x_train, y_train = readucr(file_name+'_TRAIN')
-#        x_test, y_test = readucr(file_name+'_TEST')
-#        datasets_dict[dataset_name] = (x_train.copy(),y_train.copy(),x_test.copy(),
-#            y_test.copy())
         
    
     return datasets_dict
@@ -71,15 +58,10 @@ def data_permutations(x, y):
         xt.append(np.reshape(x[i,:],(1,2*dim)))
         x1.append(x[i,:][0])
         x2.append(x[i,:][1])
-#        print (y[list(i)][0])
-#        if (y[list(i)][0] == y[list(i)][1]):
-#            print (y[list(i)][0] == y[list(i)][1])
             
         yt.append(y[list(i)][0] == y[list(i)][1])
         
-#        yt.append()
         
-#    yt = np.multiply(yt,1)+1
     yt = np.multiply(yt,1)
         
     x1 = np.asarray(x1)
@@ -111,28 +93,6 @@ def balance_data(x1,x2,xt,yt, balance=1):
     xt = xt[index,:]
     return x1, x2, xt, yt
 
-# make balanced. Make an equall number of yes/no class (balanced dat)
-#def test_balance_data(xt,yt):
-#    
-#    index_yes=list(np.where(yt==1))
-#    index_yes =  np.asanyarray(index_yes)
-#    index_yes=index_yes.squeeze(axis=0)
-#    
-#    index_no = list(np.where(yt==0))
-#    rand_index=np.random.permutation(index_no[0])
-#    index_no = rand_index[:len(index_yes)]
-#     
-#    index =np.append(index_yes, index_no)
-#    index = np.random.permutation(index)
-#    
-#    yt=yt[index]
-#    
-##    x1=x1[index,:]
-##    
-##    x2=x2[index,:]
-#    
-#    xt = xt[index,:]
-#    return xt, yt
 
 # prepare data for testing. for each testing data all the training data is used: 
 #[repeated x_test[i]][x_train]
@@ -186,10 +146,6 @@ def test_data_periparation(x, y, x_train, y_train):
 #   yt = np.multiply(yt,1)+1# convert the boolian to number started from 1
    yt = np.multiply(yt,1)# convert the boolian to number started from 1
 
-##    x1 = np.asarray(x1)
-##    x2 = np.asarray(x2)
-#   xt = np.asarray(xt)
-#    xt = np.squeeze(xt)
    return x1, x2, xt, yt
 # preipare data for testing. for each testing data all the training data is used: 
 #[repeated x_test[i]][x_train], [reapeat y_est[i]], y_train
@@ -206,7 +162,6 @@ def test_data_periparation_twoOut_machine(x, y, x_train, y_train):
    
    for data, l_test in zip(x,y):
        data = np.expand_dims(data, axis = 0)
-#       data = np.reshape(data, (len(data),1))
        x_test00 = np.repeat(data, x_train.shape[0], axis=0)
        x_test0 = np.concatenate((x_test00, x_train), axis =1)#[repeated x_test(i),x_train]
        
@@ -301,15 +256,8 @@ def test_data_periparation_twoOut(x, y, x_train, y_train):
            y1_test = np.concatenate((y1_test,y_test0))#
            y2_train = np.concatenate((y2_train,y_train))# repetition of train label
    yt = y1_test == y2_train
-#   yt = np.multiply(yt,1)+1# convert the boolian to number started from 1
    yt = np.multiply(yt,1)# convert the boolian to number started from 1
 
-##    x1 = np.asarray(x1)
-##    x2 = np.asarray(x2)
-#   xt = np.asarray(xt)
-#    xt = np.squeeze(xt)
-#x1: repeated test, y1_test: repeated lable for test
-#x2: repeated train, y2_train: reapeated label for train
 
    return x1, x2, xt, y1_test, y2_train, yt
 
@@ -369,15 +317,6 @@ def calculate_accuracy(y_actual, y_tru, y_train):#actual and true label:(y_actua
                     if key[ind] == y_tru[j]:
                         count = count+1
                         
-                    
-#                    print(y_train_1)#non zero output 
-#                    print (rep)#number of repeatation
-#                    print (key)
-#                    
-#                    print (key[ind])#key of maximume repitation
-#                    print (y_tru[j])
-##                   
-#                    print('************')
  
             accuracy = count/len(y_tru)#*100
             print (accuracy)
@@ -415,15 +354,6 @@ def calculate_accuracy_precision(y_actual, y_tru, y_train):#actual and true labe
                     if key[ind] == y_tru[j]:
                         count = count+1
                         
-                    
-#                    print(y_train_1)#non zero output 
-#                    print (rep)#number of repeatation
-#                    print (key)
-#                    
-#                    print (key[ind])#key of maximume repitation
-#                    print (y_tru[j])
-##                   
-#                    print('************')
 ####calculate precision, recall and f1 on the data samples which are predected by the final layer
             precision_s=precision_score(y_actual_new, y_pred_new, average='macro')
             recall_s=recall_score(y_actual_new, y_pred_new, average='macro')
@@ -490,14 +420,6 @@ def calculate_accuracy_y(y_actual, y_tru, y_train):#actual and true label:(y_act
                         count = count+1
                         
                     
-#                    print(y_train_1)#non zero output 
-#                    print (rep)#number of repeatation
-#                    print (key)
-#                    
-#                    print (key[ind])#key of maximume repitation
-#                    print (y_tru[j])
-##                   
-#                    print('************')
  
             accuracy = count/len(y_tru)#*100
             print (accuracy)
@@ -514,20 +436,13 @@ def save_logs_AT(output_directory, hist, y_pred, y_true,duration,lr=True,y_true_
     df_metrics = calculate_metrics(y_true,y_pred, duration,y_true_val,y_pred_val)
     df_metrics.to_csv(output_directory+'df_metrics.csv', index=False)
 
-#    index_best_model = hist_df['loss'].idxmin() 
-#    index_best_model = hist_df['val_loss'].idxmin() 
     
     index_best_model = hist_df['val_dense_1a_loss'].idxmin() 
-#    index_best_model = hist_df['val_dense_last_acc'].idxmax() 
     
     
     
     
     row_best_model = hist_df.loc[index_best_model]
-#    df_best_model = pd.DataFrame(data = np.zeros((1,6),dtype=np.float) , index = [0], 
-#        columns=['best_model_train_loss', 'best_model_val_loss', 'best_model_train_acc', 
-#        'best_model_val_acc', 'best_model_learning_rate','best_model_nb_epoch'])
-    
     
 
     df_best_model = pd.DataFrame(data = np.zeros((1,14),dtype=np.float) , index = [0], 
@@ -536,10 +451,6 @@ def save_logs_AT(output_directory, hist, y_pred, y_true,duration,lr=True,y_true_
         'best_model_val_acc2', 'best_model_train_loss3', 'best_model_val_loss3', 'best_model_train_acc3', 
         'best_model_val_acc3', 'best_model_learning_rate','best_model_nb_epoch'])
     
-#    df_best_model['best_model_train_loss'] = row_best_model['loss']
-#    df_best_model['best_model_val_loss'] = row_best_model['val_loss']
-#    df_best_model['best_model_train_acc'] = row_best_model['acc']
-#    df_best_model['best_model_val_acc'] = row_best_model['val_acc']
     df_best_model['best_model_train_loss1'] = row_best_model['dense_1a_loss']
     df_best_model['best_model_val_loss1'] = row_best_model['val_dense_1a_loss']
     df_best_model['best_model_train_acc1'] = row_best_model['dense_1a_acc']
@@ -548,12 +459,6 @@ def save_logs_AT(output_directory, hist, y_pred, y_true,duration,lr=True,y_true_
     ######
     index_best_model2 = hist_df['dense_1a_loss'].idxmin()
     row_best_model2 = hist_df.loc[index_best_model2]
-#    print('\nvalidation accuracy of out1 based on dens_1a_loss:')
-#    print (row_best_model2['val_dense_1a_acc'])
-#    
-#    
-#    print ('\nvalidation accuracy of out1(val_dense_1a_acc):')
-#    print (row_best_model['val_dense_1a_acc'])
     
    
     
@@ -617,8 +522,6 @@ def save_logs_AT_o1o3(output_directory, hist, y_pred, y_true,duration,lr=True,y_
 
     df_best_model['best_model_train_loss3'] = row_best_model['dense_last_loss']
     df_best_model['best_model_val_loss3'] = row_best_model['val_dense_last_loss']
-    # df_best_model['best_model_train_acc3'] = row_best_model['dense_last_acc']
-    # df_best_model['best_model_val_acc3'] = row_best_model['val_dense_last_acc']    
     df_best_model['best_model_train_acc3'] = row_best_model['dense_last_accuracy']
     df_best_model['best_model_val_acc3'] = row_best_model['val_dense_last_accuracy']    
     
@@ -720,8 +623,6 @@ def calculate_accuracyMaxVot(y_actual, y_tru, y_train, yo_test):#calculate the a
             #    if actual_lable == y_tru[i]:
             #          count = count+1
             accuracy_onMax_v = count/len(y_tru)#*100
-            #print('The accuracy of the last output based on the maximum probability and voting is:')
-            #print( accuracy_onMax_v) 
             return accuracy_onMax_v 
     
 def calculate_accuracyMax3(y_actual, y_tru, y_train, yo_test):#calculate the accuray of the last out(2 classes out put), MAx prob
